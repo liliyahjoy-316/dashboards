@@ -12,7 +12,7 @@ library(palmerpenguins)
 penguins <- penguins
 ```
 
-# Data Graphs 
+# Data Graphs
 
 ## Row 1
 

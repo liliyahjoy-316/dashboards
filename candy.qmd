@@ -7,7 +7,7 @@ format:
     theme: sketchy
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, include=FALSE}
 
 library(tidyverse)
 library(plotly)
@@ -15,15 +15,19 @@ library(fivethirtyeight)
 
 candy <- fivethirtyeight::candy_rankings
 
-candy <- candy |> 
-  mutate(type = case_when(
-    chocolate & fruity ~ "both", 
-    chocolate ~ "chocolate", 
-    fruity ~ "fruity",
-    .default = "other"
-  ))
-  
+candy <- candy %>%
+  mutate(
+    type = case_when(
+      chocolate == TRUE ~ "chocolate",
+      fruity == TRUE    ~ "fruity",
+      hard == TRUE      ~ "hard candy",
+      TRUE              ~ "other"
+    ),
+    value_score = winpercent / pricepercent
+  )
+
 count(candy, type)
+
 ```
 
 ## Row 1
@@ -53,10 +57,25 @@ list(
 ## Row 2
 
 ```{r}
+#| label: Best Bang For Your Buck 
 
+BBFYB <- ggplot(data = candy, aes(x = pricepercent, y = winpercent, color = type, text = competitorname)) + 
+  geom_point(size = 1, alpha = 0.8, shape = 18) + 
+  labs (title = "BEST BANG FOR YOUR BUCK",
+        y = "Win Percent",
+        x = "Price Percent",
+        color = "Type of Candy")
+
+ggplotly(BBFYB)
 
 ```
 
 ```{r}
 
+
+
+# pricepercent : Percenetaile 
+# winpercent: percent 
 ```
+
+## 

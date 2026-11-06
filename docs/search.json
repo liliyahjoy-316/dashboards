@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "dashboards",
+    "title": "Dashboard Projects",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n33 + 34\n\n[1] 67"
+    "text": "Palmer Penguins Dashboard\nCandy"
   },
   {
     "objectID": "about.html",
@@ -12,5 +12,12 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n33 + 34\n\n[1] 67"
+  },
+  {
+    "objectID": "index.html#dashboards",
+    "href": "index.html#dashboards",
+    "title": "Dashboard Projects",
+    "section": "",
+    "text": "Palmer Penguins Dashboard\nCandy"
   }
 ]

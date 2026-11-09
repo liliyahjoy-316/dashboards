@@ -5,7 +5,7 @@ project:
 website:
   title: "Dashboard Projects"
   navbar:
-    left:
+    right:
       - href: https://liliyahjoy-316.github.io
         text: Home (෴ • マ
       - penguins.qmd

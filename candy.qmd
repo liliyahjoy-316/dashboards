@@ -15,20 +15,25 @@ library(fivethirtyeight)
 
 candy <- fivethirtyeight::candy_rankings
 
-candy <- candy %>%
+
+candy <- candy |> 
   mutate(
+    price_pctile = pricepercent * 100,
+    win_pctile   = percent_rank(winpercent) * 100,
+    value_score  = win_pctile - price_pctile,
     type = case_when(
       chocolate == TRUE ~ "chocolate",
       fruity == TRUE    ~ "fruity",
       hard == TRUE      ~ "hard candy",
       TRUE              ~ "other"
-    ),
-    value_score = winpercent / pricepercent
+    )
   )
 
 count(candy, type)
 
 ```
+
+# Candy Charts
 
 ## Row 1
 
@@ -38,7 +43,7 @@ count(candy, type)
 
 list(
   icon = "basket",
-  color = "warning",
+  color = "info",
   value = nrow(candy))
 
 
@@ -54,28 +59,65 @@ list(
   value = sum(candy$type == "fruity"))
 ```
 
+```{r}
+#| content: valuebox
+#| title: "Number of Chocolate Candies"
+
+list(
+  icon = "basket",
+  color = "success",
+  value = sum(candy$type == "chocolate"))
+```
+
+```{r}
+#| content: valuebox
+#| title: "Number of Hard Candies"
+
+list(
+  icon = "basket",
+  color = "warning",
+  value = sum(candy$type == "hard candy"))
+```
+
 ## Row 2
 
 ```{r}
 #| label: Best Bang For Your Buck 
 
-BBFYB <- ggplot(data = candy, aes(x = pricepercent, y = winpercent, color = type, text = competitorname)) + 
-  geom_point(size = 1, alpha = 0.8, shape = 18) + 
-  labs (title = "BEST BANG FOR YOUR BUCK",
-        y = "Win Percent",
-        x = "Price Percent",
-        color = "Type of Candy")
+BBFYB <- ggplot(data = candy, aes(x = price_pctile, y = winpercent, color = type, text = competitorname)) + 
+  geom_point(size = 3, alpha = 0.8, shape = 18) + 
+  labs(title = "BEST BANG FOR YOUR BUCK",
+       x = "Price Percentile (0 = cheapest, 100 = priciest)",
+       y = "Win Percent (share of matchups won)",
+       color = "Type of Candy")
 
 ggplotly(BBFYB)
 
 ```
 
 ```{r}
+#| label: dumbell plot 
 
+top <- candy |> slice_max(value_score, n = 15)
 
+DUMB <- ggplot(top, aes(y = reorder(competitorname, value_score))) +
+  geom_segment(aes(x = price_pctile, xend = win_pctile, yend = competitorname),
+               color = "grey70", linewidth = 1) +
+  geom_point(aes(x = price_pctile, text = paste0(competitorname, "<br>Price pctile: ", round(price_pctile))),
+             color = "purple", size = 3) +
+  geom_point(aes(x = win_pctile, text = paste0(competitorname, "<br>Popularity pctile: ", round(win_pctile))),
+             color = "darkgreen", size = 3) +
+  labs(title = "Top 15 Best Value: Price vs. Popularity Percentile",
+       x = "Percentile (red = price, blue = popularity)", y = NULL)
 
-# pricepercent : Percenetaile 
-# winpercent: percent 
+ggplotly(DUMB, tooltip = "text")
 ```
 
-## 
+
+
+
+```{r}
+# Candy Table
+
+#knitr::kable(candy)
+```

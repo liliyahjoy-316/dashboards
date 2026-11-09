@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Dashboard Projects",
     "section": "",
-    "text": "Palmer Penguins Dashboard\nCandy"
+    "text": "## Dashboards\n\nPenguins Dashboard\n\nPalmer Penguins Dashboard  This dashboard will let you explore the Palmer penguins data focusing on body mass or bill length by islands and comparing the bill or flipper length by body mass colored by species.\n\n\n\nCandy Dashboard\n\nCandy Dashboard  This dashboard will let you explore a candy data set provided from FiveThirtyEight Candy Power Ranking. Ive analyzed the candy thats the best bang for your buck."
   },
   {
     "objectID": "about.html",
@@ -17,7 +17,7 @@
     "objectID": "index.html#dashboards",
     "href": "index.html#dashboards",
     "title": "Dashboard Projects",
-    "section": "",
-    "text": "Palmer Penguins Dashboard\nCandy"
+    "section": "Dashboards",
+    "text": "Dashboards"
   }
 ]
